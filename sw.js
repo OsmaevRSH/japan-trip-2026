@@ -1,8 +1,8 @@
-// Service worker «Япония 2026». Версия кэша = хэш сборки; собран 2026-10-19T13:09:54.798Z.
+// Service worker «Япония 2026». Версия кэша = хэш сборки; собран 2026-10-19T13:39:40.052Z.
 // Свои файлы: отдаём из кэша и параллельно обновляем из сети (stale-while-revalidate).
 // Google Fonts: CSS — так же, файлы шрифтов — из кэша (они неизменяемые). Firebase (общие отметки) не кэшируется.
 'use strict';
-const VERSION = "8d4023fb76db";
+const VERSION = "bb1a5116f330";
 const CACHE = 'jp26-' + VERSION;
 const FONTS = 'jp26-fonts';
 const PRECACHE = ["./","./index.html","./manifest.webmanifest","./icons/apple-touch-icon.png","./icons/icon-192.png","./icons/icon-512.png","./icons/icon-512-maskable.png"];
