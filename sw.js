@@ -1,8 +1,8 @@
-// Service worker «Япония 2026». Версия кэша = хэш сборки; собран 2026-10-19T11:53:06.282Z.
+// Service worker «Япония 2026». Версия кэша = хэш сборки; собран 2026-10-19T12:43:39.023Z.
 // Свои файлы: отдаём из кэша и параллельно обновляем из сети (stale-while-revalidate).
-// Google Fonts: CSS — так же, файлы шрифтов — из кэша (они неизменяемые).
+// Google Fonts: CSS — так же, файлы шрифтов — из кэша (они неизменяемые). Firebase (общие отметки) не кэшируется.
 'use strict';
-const VERSION = "9b4a69114475";
+const VERSION = "8c22ae9f6da4";
 const CACHE = 'jp26-' + VERSION;
 const FONTS = 'jp26-fonts';
 const PRECACHE = ["./","./index.html","./manifest.webmanifest","./icons/apple-touch-icon.png","./icons/icon-192.png","./icons/icon-512.png","./icons/icon-512-maskable.png"];
@@ -53,10 +53,14 @@ function cacheFirst(cacheName, request) {
   );
 }
 
+// Общие отметки (Firebase Realtime Database: поток и запись) — только сеть, мимо кэша.
+const isSyncHost = (host) => host.endsWith('.firebaseio.com') || host.endsWith('.firebasedatabase.app');
+
 self.addEventListener('fetch', (event) => {
   const req = event.request;
-  if (req.method !== 'GET') return;
   const url = new URL(req.url);
+  if (isSyncHost(url.hostname)) return;
+  if (req.method !== 'GET') return;
   if (url.origin === self.location.origin) {
     if (!url.href.startsWith(self.registration.scope)) return;
     if (req.mode === 'navigate') {
